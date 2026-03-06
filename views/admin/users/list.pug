@@ -1,0 +1,29 @@
+extends ../../common/layout
+
+block layout-content
+  h1.mb-3 Users
+  a.btn.btn-primary.mb-3(href="/admin/users/add") + Add User
+
+  if users.length
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Full Name
+          th Username
+          th Email
+          th Phone
+          th City
+          th Actions
+      tbody
+        each user in users
+          tr
+            td #{user.fullName}
+            td #{user.username}
+            td #{user.email}
+            td #{user.phone}
+            td #{user.city}
+            td
+              a.btn.btn-sm.btn-outline-secondary(href=`/admin/users/edit?id=${user._id}`) Edit
+              a.btn.btn-sm.btn-outline-danger.ms-1(href=`/admin/users/delete?id=${user._id}`) Delete
+  else
+    p.text-muted No users found.

@@ -1,0 +1,25 @@
+{
+  "name": "foodspots-admin",
+  "version": "1.0.0",
+  "description": "admin website for foodspots application",
+  "license": "ISC",
+  "author": "Jiya John",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./index.js",
+    "app": "node ./index.js"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongodb": "^7.0.0",
+    "multer": "^2.1.1",
+    "pug": "^3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}

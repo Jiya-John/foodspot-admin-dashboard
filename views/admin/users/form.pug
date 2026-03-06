@@ -1,0 +1,39 @@
+extends ../../common/layout
+
+block layout-content
+  h1.mb-3 #{title}
+
+  if error
+    .alert.alert-danger #{error}
+
+  form(method="post", action=formAction)
+    if user._id
+      input(type="hidden", name="id", value=user._id)
+
+    .mb-3
+      label.form-label(for="fullName") Full Name
+      input.form-control(type="text", id="fullName", name="fullName", required, value=user.fullName || "")
+
+    .mb-3
+      label.form-label(for="username") Username
+      input.form-control(type="text", id="username", name="username", required, value=user.username || "")
+
+    .mb-3
+      label.form-label(for="email") Email
+      input.form-control(type="email", id="email", name="email", required, value=user.email || "")
+
+    .mb-3
+      label.form-label(for="phone") Phone
+      input.form-control(type="text", id="phone", name="phone", value=user.phone || "")
+
+    .mb-3
+      label.form-label(for="city") City
+      input.form-control(type="text", id="city", name="city", value=user.city || "")
+
+    if !user._id
+      .mb-3
+        label.form-label(for="password") Password
+        input.form-control(type="text", id="password", name="password")
+
+    button.btn.btn-primary(type="submit") Save
+    a.btn.btn-secondary.ms-2(href="/admin/users") Cancel

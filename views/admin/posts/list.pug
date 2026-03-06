@@ -1,0 +1,35 @@
+extends ../../common/layout
+
+block layout-content
+  h1.mb-3 Posts
+  a.btn.btn-primary.mb-3(href="/admin/posts/add") + Add Post
+
+  if posts.length
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th Photo
+          th Restaurant
+          th Dish
+          th Likes
+          th Actions
+      tbody
+        each post in posts
+          tr
+            td
+              if post.photo
+                img(
+                  class="post-photo"
+                  src=`data:${post.photoType};base64,${post.photo.toString('base64')}`
+                  alt="Photo"
+                )
+              else
+                span.text-muted No image
+            td #{post.restaurantName} (#{post.restaurantCity})
+            td #{post.dishName}
+            td #{post.likesCount}
+            td
+              a.btn.btn-sm.btn-outline-secondary(href=`/admin/posts/edit?id=${post._id}`) Edit
+              a.btn.btn-sm.btn-outline-danger.ms-1(href=`/admin/posts/delete?id=${post._id}`) Delete
+  else
+    p.text-muted No posts found.

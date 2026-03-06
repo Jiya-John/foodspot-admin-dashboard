@@ -1,0 +1,16 @@
+extends ../common/layout
+
+block layout-content
+  h1.mb-3 API Endpoints
+
+  p These endpoints return JSON arrays of data.
+
+  ul
+    li
+      code GET /api/users
+      |  –
+      a.btn.btn-outline-primary.me-2(href="/api/users", target="_blank") View
+    li
+      code GET /api/posts
+      |  –
+      a.btn.btn-outline-primary.me-2(href="/api/posts", target="_blank") View

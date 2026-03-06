@@ -1,0 +1,52 @@
+extends ../../common/layout
+
+block layout-content
+  h1.mb-3 #{title}
+
+  if error
+    .alert.alert-danger #{error}
+
+  form(method="post", enctype="multipart/form-data" action=formAction)
+    if post._id
+      input(type="hidden", name="id", value=post._id)
+
+    .mb-3
+      label.form-label(for="userId") User
+      select.form-select(id="userId", name="userId", required)
+        option(value="") -- Select user --
+        each user in users
+          option(
+            value=user._id,
+            selected=post.userId && String(post.userId) === String(user._id)
+          ) #{user.fullName} (#{user.username})
+
+    .mb-3
+      label.form-label(for="photo") Photo
+      input.form-control(type="file", id="photo", name="photo", accept="image/*")
+
+    .mb-3
+      label.form-label(for="restaurantName") Restaurant Name
+      input.form-control(type="text", id="restaurantName", name="restaurantName", value=post.restaurantName || "")
+
+    .mb-3
+      label.form-label(for="restaurantCity") Restaurant City
+      input.form-control(type="text", id="restaurantCity", name="restaurantCity", value=post.restaurantCity || "")
+
+    .mb-3
+      label.form-label(for="restaurantAddress") Restaurant Address
+      input.form-control(type="text", id="restaurantAddress", name="restaurantAddress", value=post.restaurantAddress || "")
+
+    .mb-3
+      label.form-label(for="dishName") Dish Name
+      input.form-control(type="text", id="dishName", name="dishName", value=post.dishName || "")
+
+    .mb-3
+      label.form-label(for="comment") Comment
+      textarea.form-control(id="comment", name="comment", rows="3")= post.comment || ""
+
+    .mb-3
+      label.form-label(for="likesCount") Likes Count
+      input.form-control(type="number", id="likesCount", name="likesCount", value=post.likesCount || 0)
+
+    button.btn.btn-primary(type="submit") Save
+    a.btn.btn-secondary.ms-2(href="/admin/posts") Cancel
