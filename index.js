@@ -22,7 +22,11 @@ const db = client.db(process.env.MONGODB_DBNAME);
 
 // Express setup
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 const port = process.env.PORT || "8888";
 
 // Template engine
