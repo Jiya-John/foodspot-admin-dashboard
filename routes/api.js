@@ -31,7 +31,19 @@ export default function apiRoutes(db, upload) {
 
   // UPDATE user
   router.put("/users/:id", async (req, res) => {
-    await editUser(db, req.params.id, req.body);
+    const updates = {
+      fullName: req.body.fullName,
+      username: req.body.username,
+      city: req.body.city,
+      phone: req.body.phone,
+      updatedAt: new Date(),
+    }
+
+    await db.collection("users").updateOne(
+      { _id: new ObjectId(req.params.id) },
+      { $set: updates }
+    );
+
     res.json(await getSingleUser(db, req.params.id));
   });
 
