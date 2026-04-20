@@ -39,6 +39,12 @@ export default function apiRoutes(db, upload) {
   router.post("/signup", async (req, res) => {
     const { fullName, username, email, password, city } = req.body;
 
+    //checking if existing user
+    const existing = await db.collection("users").findOne({ email });
+    if (existing) {
+      return res.status(400).json({ error: "Email already in use" });
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const userDoc = {
