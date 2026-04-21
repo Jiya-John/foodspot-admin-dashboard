@@ -148,6 +148,20 @@ export default function apiRoutes(db, upload) {
     res.json({ success: true });
   });
 
+  // DELETE post
+  router.delete("/posts/:id", async (req, res) => {
+    try {
+      await db.collection("posts").deleteOne({
+        _id: new ObjectId(req.params.id)
+      });
+
+      res.json({ success: true });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to delete post" });
+    }
+  });
+
   // Serve photo
   router.get("/posts/:id/photo", async (req, res) => {
     const post = await getSinglePost(db, req.params.id);
