@@ -99,10 +99,37 @@ export default function apiRoutes(db, upload) {
     });
   });
 
-  // GET all posts
+  // GET all posts with search + pagination
   router.get("/posts", async (req, res) => {
-    res.json(await getPosts(db));
+    try {
+      const skip = parseInt(req.query.skip) || 0;
+      const limit = parseInt(req.query.limit) || 8;
+      const q = req.query.q?.trim() || "";
+
+      const filter = q
+        ? {
+            $or: [
+              { restaurantName: { $regex: q, $options: "i" } },
+              { restaurantCity: { $regex: q, $options: "i" } },
+              { dishName: { $regex: q, $options: "i" } },
+            ],
+          }
+        : {};
+
+      const posts = await db
+        .collection("posts")
+        .find(filter)
+        .skip(skip)
+        .limit(limit)
+        .sort({ createdAt: -1 })
+        .toArray();
+
+      res.json(posts);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
   });
+
 
   // GET single post
   router.get("/posts/:id", async (req, res) => {
